@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleTodo} from './todoHelpers'
+import {addTodo, findById, toggleTodo, updateTodo} from './todoHelpers'
 
 //Range X Assert Tests
 
@@ -62,24 +62,31 @@ test('toggleTodo should not mutate the original todo', () => {
     expect(result).not.toBe(expected)
 })
 
-test.skip('updateTodo should update an item by id', () => {
+test('updateTodo should update an item by id', () => {
     const startTodos = [
         {id: 1, name: 'one', isComplete: false},
         {id: 2, name: 'two', isComplete: false},
         {id: 3, name: 'three', isComplete: false}
     ]
-    const expected = {id: 2, name: 'two', isComplete: false}
-    const result = findById(2, startTodos)
-    expect(result).toEqual(expected)
+    const updatedTodo = {id: 2, name: 'two', isComplete: true}
+    const expectedTodos = [
+        {id: 1, name: 'one', isComplete: false},
+        {id: 2, name: 'two', isComplete: true},
+        {id: 3, name: 'three', isComplete: false}
+    ]
+    
+    const result = updateTodo(startTodos, updatedTodo)
+    expect(result).toEqual(expectedTodos)
 })
 
-test.skip('updateTodo should not mutate the original todo', () => {
+test('updateTodo should not mutate the original todo', () => {
     const startTodos = [
         {id: 1, name: 'one', isComplete: false},
         {id: 2, name: 'two', isComplete: false},
         {id: 3, name: 'three', isComplete: false}
     ]
-    const expected = {id: 2, name: 'two', isComplete: false}
-    const result = findById(2, startTodos)
-    expect(result).toEqual(expected)
+    const updatedTodo = {id: 2, name: 'two', isComplete: true}
+
+    const result = updateTodo(startTodos, updatedTodo)
+    expect(result).not.toBe(startTodos)
 })
